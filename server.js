@@ -74,7 +74,7 @@ var NotesApp = function() {
    *  the handlers.
    */
   self.initializeServer = function(callback) {
-    self.routes = require('./routes/routes');
+    self.routes = require('./src/routes/routes');
     self.app = express.createServer();
     self.app.use(self.redirectToHttps);
     self.app.use(express.static('public'));

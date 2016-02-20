@@ -11,12 +11,12 @@ function getRoute(name) {
 
 function getRoutes() {
   var deferred = q.defer();
-  recursive('routes', ['routes.js'], function (err, files) {
+  recursive('src/routes', ['routes.js'], function (err, files) {
     if (err) {
       deferred.reject(err);
     } else {
       deferred.resolve(files.map(function (file) {
-        return getRoute(file.slice(6, -3));
+        return getRoute(file.slice(10, -3));
       }));
     }
   });
