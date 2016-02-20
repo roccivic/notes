@@ -1,7 +1,7 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "OpenShift-Notes-App",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "OpenShift Notes Application",
   "keywords": [
     "OpenShift",
     "Node.js",
@@ -9,14 +9,14 @@
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "Rouslan Placella",
+    "email": "rouslan@placella.com",
+    "url": "https://github.com/roccivic"
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "https://github.com/roccivic/notes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openshift/origin-server"
+    "url": "https://github.com/roccivic/notes.git"
   },
   "engines": {
     "node": ">= 0.6.0",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "express": "~3.4.4",
+    "mongodb": "^2.1.7",
     "q": "^1.4.1",
     "recursive-readdir": "^1.3.0"
   },
