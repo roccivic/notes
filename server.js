@@ -3,14 +3,6 @@
 var express = require('express');
 var fs      = require('fs');
 
-function redirectSec(req, res, next) {
-  if (req.headers['x-forwarded-proto'] == 'http') {
-      res.redirect('https://' + req.headers.host + req.path);
-  } else {
-      return next();
-  }
-}
-
 /**
  *  Define the sample application.
  */
@@ -72,48 +64,31 @@ var NotesApp = function() {
     };
 
 
-    /*  ================================================================  */
-    /*  App server functions (main app logic here).                       */
-    /*  ================================================================  */
-
-    /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        self.routes = { };
-
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-    };
-
-
     /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
-    self.initializeServer = function() {
-        self.createRoutes();
+    self.initializeServer = function(callback) {
+        self.routes = require('./routes/routes');
         self.app = express.createServer();
         self.app.use(express.static('public'));
-
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, redirectSec, self.routes[r]);
-        }
+        self.routes.init(self.app).then(function() {
+            callback();
+        }, function () {
+            throw new Error('Failed to load routes');
+        });
     };
 
 
     /**
      *  Initializes the sample application.
      */
-    self.initialize = function() {
+    self.initialize = function(callback) {
         self.setupVariables();
         self.setupTerminationHandlers();
 
         // Create the express server and routes.
-        self.initializeServer();
+        self.initializeServer(callback);
     };
 
 
@@ -136,6 +111,4 @@ var NotesApp = function() {
  *  main():  Main code.
  */
 var zapp = new NotesApp();
-zapp.initialize();
-zapp.start();
-
+zapp.initialize(zapp.start);
