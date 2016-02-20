@@ -1,6 +1,8 @@
 #!/bin/env node
 var express = require('express');
-var fs      = require('fs');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var fs = require('fs');
 
 /**
  *  Define the sample application.
@@ -78,6 +80,12 @@ var NotesApp = function() {
     self.app = express.createServer();
     self.app.use(self.redirectToHttps);
     self.app.use(express.static('public'));
+    self.app.use(session({
+      secret: 'EInecV62i3DyWhsVhlpq',
+      resave: false,
+      saveUninitialized: true
+    }));
+    self.app.use(bodyParser.json());
     self.routes.init(self.app).then(function() {
       callback();
     }, function () {
