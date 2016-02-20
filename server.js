@@ -63,6 +63,17 @@ var NotesApp = function() {
         });
     };
 
+    /**
+     * Redirects all http traffic to https
+     */
+    self.redirectToHttps = function(req, res, next) {
+      if (req.headers['x-forwarded-proto'] == 'http') {
+          res.redirect('https://' + req.headers.host + req.path);
+      } else {
+          return next();
+      }
+    }
+
 
     /**
      *  Initialize the server (express) and create the routes and register
@@ -71,6 +82,7 @@ var NotesApp = function() {
     self.initializeServer = function(callback) {
         self.routes = require('./routes/routes');
         self.app = express.createServer();
+        self.app.use(self.redirectToHttps);
         self.app.use(express.static('public'));
         self.routes.init(self.app).then(function() {
             callback();

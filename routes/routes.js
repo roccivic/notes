@@ -3,14 +3,6 @@
 var recursive = require('recursive-readdir');
 var q = require('q');
 
-function redirectToHttps(req, res, next) {
-  if (req.headers['x-forwarded-proto'] == 'http') {
-      res.redirect('https://' + req.headers.host + req.path);
-  } else {
-      return next();
-  }
-}
-
 function getRoute(name) {
 	var route = require('.' + name);
 	route.url = name;
@@ -38,7 +30,6 @@ module.exports = {
 			routes.forEach(function (route) {
 				app[route.method](
 					route.url,
-					redirectToHttps,
 					route.action
 				);
 			});
