@@ -13,4 +13,18 @@ angular
   .otherwise({
     redirectTo: '/login'
   });;
-});
+})
+.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.interceptors.push(function($q, $location) {
+    return {
+      'responseError': function(rejection){
+        var defer = $q.defer();
+        if(rejection.status == 401){
+            $location.path('/login');
+        }
+        defer.reject(rejection);
+        return defer.promise;
+      }
+    };
+  });
+}]);

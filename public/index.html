@@ -7,11 +7,24 @@
   [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
   }
+  .menu button {
+    margin-left: 10px;
+  }
   </style>
 </head>
 <body ng-app="notes" ng-cloak>
   <div class="container">
-    <h2>Notes</h2>
+    <div class="menu" ng-controller="MenuController">
+      <div class="pull-right" ng-if="loggedIn()">
+        <button class="btn btn-primary" ng-click="addNote()">
+          Add note
+        </button>
+        <button class="btn btn-primary" ng-click="logout()" ng-disabled="loading">
+          Log out
+        </button>
+      </div>
+      <h2>Notes</h2>
+    </div>
     <div ng-view></div>
   </div>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>

@@ -1,1 +1,18 @@
-list goes here
+<div ng-if="error" class="alert alert-danger">
+  An error has occurred while retrieving the notes.
+</div>
+<div ng-if="loading" class="alert alert-info">
+  Loading&hellip;
+</div>
+<div ng-if="!loading && !error">
+  <ul ng-repeat="note in notes" class="list-group">
+    <li class="list-group-item">
+      <h4>
+        {{note.title}}
+      </h4>
+      <span class="pull-right">
+        {{note.modified}}
+      </span>
+    </li>
+  </ul>
+</div>
