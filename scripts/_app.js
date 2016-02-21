@@ -1,5 +1,5 @@
 angular
-.module('notes', ['ngSanitize', 'ngRoute', 'ui.bootstrap', 'angularMoment'])
+.module('notes', ['ngSanitize', 'ngRoute', 'ui.bootstrap', 'angularMoment', 'ng-showdown'])
 .config(function($routeProvider) {
   $routeProvider
   .when('/login', {
@@ -22,7 +22,7 @@ angular
     redirectTo: '/login'
   });;
 })
-.config(['$httpProvider', function($httpProvider) {
+.config(function($httpProvider) {
   $httpProvider.interceptors.push(function($q, $location) {
     return {
       'responseError': function(rejection){
@@ -35,7 +35,10 @@ angular
       }
     };
   });
-}])
+})
+.config(function($showdownProvider) {
+  $showdownProvider.setOption('tables', true);
+})
 .run(function(amMoment) {
   amMoment.changeLocale('en-UK');
 });
