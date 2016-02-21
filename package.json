@@ -31,8 +31,23 @@
     "recursive-readdir": "^1.3.0",
     "sha.js": "^2.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ng-html2js": "^2.0.0",
+    "parallelshell": "^2.0.0",
+    "uglify-js": "^2.6.1",
+    "watch": "^0.17.1"
+  },
   "bundleDependencies": [],
   "private": true,
-  "main": "server.js"
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "watch": "parallelshell 'npm start' 'npm run watch:js' 'npm run watch:html'",
+    "watch:html": "watch 'npm run templates' views",
+    "watch:js": "watch 'npm run concat' scripts",
+    "postinstall": "npm run compile",
+    "compile": "npm run templates && npm run concat",
+    "templates": "ng-html2js views/* -m notes > scripts/templates.js",
+    "concat": "cat scripts/* | uglifyjs > public/app.min.js"
+  }
 }

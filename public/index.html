@@ -2,10 +2,18 @@
 <html>
 <head>
   <title>Notes</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <style type="text/css">
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+  }
+  </style>
 </head>
-<body>
-  <p>
-    FIXME
-  </p>
+<body ng-app="notes" ng-cloak>
+  <div class="container" ng-controller="test">
+    {{ test }}
+  </div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="app.min.js"></script>
 </body>
 </html>
