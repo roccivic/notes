@@ -10,7 +10,10 @@ module.exports = {
       res.send();
     } else {
       connect().then(function(db) {
-        db.collection('notes').find({}).toArray(function(err, items) {
+        db
+        .collection('notes')
+        .find({}, {_id:1, title:1, modified:1})
+        .toArray(function(err, items) {
           if (err) {
             res.status(500);
             res.send();
