@@ -45,12 +45,24 @@ module.exports = {
                   modifiedBy: req.session.name
                 }
               }, function(err, result) {
-                db.close();
                 if (err) {
                   res.status(500);
                   res.send();
                 } else {
-                  res.send(items.pop());
+                  db.collection('notes').find({
+                    _id: new mongodb.ObjectId(id)
+                  }).toArray(function(err, items) {
+                    db.close();
+                    if (err) {
+                      res.status(500);
+                      res.send();
+                    } else if (!items.length) {
+                      res.status(404);
+                      res.send();
+                    } else {
+                      res.send(items.pop());
+                    }
+                  });
                 }
               });
             }
