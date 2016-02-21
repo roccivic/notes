@@ -1,5 +1,5 @@
 angular
-.module('notes', ['ngRoute'])
+.module('notes', ['ngRoute', 'ui.bootstrap'])
 .config(function($routeProvider) {
   $routeProvider
   .when('/login', {
@@ -9,6 +9,14 @@ angular
   .when('/notes', {
     templateUrl: 'views/notes/list.html',
     controller: 'NotesController'
+  })
+  .when('/notes/add', {
+    templateUrl: 'views/notes/edit.html',
+    controller: 'AddNoteController'
+  })
+  .when('/notes/edit/:id', {
+    templateUrl: 'views/notes/edit.html',
+    controller: 'EditNoteController'
   })
   .otherwise({
     redirectTo: '/login'

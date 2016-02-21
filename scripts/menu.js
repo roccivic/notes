@@ -15,6 +15,13 @@ angular
     });
   };
   $scope.addNote = function() {
-    $location.path('/addNote');
+    $location.path('/notes/add');
+  };
+  $scope.home = function() {
+    if ($scope.loggedIn()) {
+      $location.path('/notes');
+    } else {
+      $location.path('/login');
+    }
   };
 });

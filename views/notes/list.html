@@ -6,7 +6,7 @@
 </div>
 <div ng-if="!loading && !error">
   <ul ng-repeat="note in notes" class="list-group">
-    <li class="list-group-item">
+    <li class="list-group-item pointer" ng-click="edit(note)">
       <h4>
         {{note.title}}
       </h4>

@@ -1,0 +1,45 @@
+<uib-tabset>
+  <uib-tab active="tabs.preview.active">
+    <uib-tab-heading>Preview</uib-tab-heading>
+    <h1>
+      {{note.title || 'N/A'}}
+    </h1>
+    {{note.note || 'N/A'}}
+    <div ng-if="edit">
+      <hr>
+      <h4>
+        Created
+      </h4>
+      {{note.created || 'N/A'}}
+      <h4>
+        Created By
+      </h4>
+      {{note.createdBy || 'N/A'}}
+      <h4>
+        Last Modified
+      </h4>
+      {{note.modified || 'N/A'}}
+      <h4>
+        Last Modified By
+      </h4>
+      {{note.modifiedBy || 'N/A'}}
+    </div>
+    <br>
+    <br>
+  </uib-tab>
+  <uib-tab active="tabs.edit.active">
+    <uib-tab-heading>Edit</uib-tab-heading>
+    <br>
+    <form>
+      <div class="form-group">
+        <input class="form-control" ng-model="note.title" placeholder="Title">
+      </div>
+      <div class="form-group">
+        <textarea rows="10" class="form-control" ng-model="note.note" placeholder="Note"></textarea>
+      </div>
+    </form>
+  </uib-tab>
+</uib-tabset>
+<button class="btn btn-primary btn-block">
+  Save
+</button>
