@@ -8,6 +8,9 @@
   <div ng-if="success" class="alert alert-success">
     Successfully saved note
   </div>
+  <button type="button" class="btn btn-danger pull-right" ng-click="delete()" ng-disabled="deleting">
+    Delete
+  </button>
   <uib-tabset>
     <uib-tab active="tabs.preview.active">
       <uib-tab-heading>Preview</uib-tab-heading>

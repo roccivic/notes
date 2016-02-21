@@ -37,4 +37,18 @@ angular
       $scope.error = 'Failed to save note';
     });
   };
+  $scope.delete = function() {
+    if (confirm('You are about to DELETE a note!')) {
+      $scope.error = false;
+      $scope.deleting = true;
+      $http.post('/notes/delete', $scope.note)
+      .then(function() {
+        $scope.deleting = false;
+        $location.path('/notes');
+      }, function() {
+        $scope.deleting = false;
+        $scope.error = 'Failed to delete note';
+      });
+    }
+  };
 });
