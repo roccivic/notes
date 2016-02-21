@@ -14,7 +14,7 @@ angular
     templateUrl: 'views/notes/edit.html',
     controller: 'AddNoteController'
   })
-  .when('/notes/edit/:id', {
+  .when('/notes/edit/:_id', {
     templateUrl: 'views/notes/edit.html',
     controller: 'EditNoteController'
   })

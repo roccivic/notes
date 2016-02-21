@@ -14,28 +14,21 @@ module.exports = {
       res.send();
     } else {
       var id = req.body._id;
-      var title = req.body.title;
-      var note = req.body.note;
-      if (!id || !title || !note) {
+      if (!id) {
         res.status(400);
         res.send();
       } else {
         connect().then(function(db) {
-          db.collection('notes').updateOne({
+          db.collection('notes').find({
             _id: new mongodb.ObjectId(id)
-          }, {
-            '$set': {
-              title: title,
-              note: note,
-              modified: new Date(),
-              modifiedBy: req.session.email
-            }
-          }, function(err, result) {
+          }).toArray(function(err, items) {
+            db.close();
             if (err) {
               res.status(500);
+              res.send();
+            } else {
+              res.send(items.pop());
             }
-            db.close();
-            res.send();
           });
         }, function(err) {
           res.status(500);

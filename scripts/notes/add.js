@@ -12,7 +12,6 @@ angular
   };
   $scope.note = {};
   $scope.submit = function() {
-    $scope.success = false;
     $scope.error = false;
     $scope.saving = true;
     $http.post('/notes/add', $scope.note)
@@ -21,7 +20,7 @@ angular
       $location.path('/notes');
     }, function() {
       $scope.saving = false;
-      $scope.error = true
+      $scope.error = 'Failed to save note';
     });
   };
 });

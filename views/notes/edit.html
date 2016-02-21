@@ -1,9 +1,12 @@
-<form ng-submit="submit()">
+<div ng-if="error" class="alert alert-danger">
+  {{error}}
+</div>
+<div ng-if="loading" class="alert alert-info">
+  Loading&hellip;
+</div>
+<form ng-if="!loading && !error" ng-submit="submit()">
   <div ng-if="success" class="alert alert-success">
     Successfully saved note
-  </div>
-  <div ng-if="error" class="alert alert-alert">
-    Failed to save note
   </div>
   <uib-tabset>
     <uib-tab active="tabs.preview.active">
