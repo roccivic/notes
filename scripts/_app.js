@@ -1,5 +1,5 @@
 angular
-.module('notes', ['ngRoute', 'ui.bootstrap'])
+.module('notes', ['ngSanitize', 'ngRoute', 'ui.bootstrap'])
 .config(function($routeProvider) {
   $routeProvider
   .when('/login', {
