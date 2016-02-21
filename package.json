@@ -49,7 +49,7 @@
     "watch:src": "nodemon server --watch src",
     "postinstall": "npm run compile",
     "compile": "npm run templates && npm run concat",
-    "templates": "ng-html2js views/* -m notes > scripts/templates.js",
-    "concat": "cat scripts/* | uglifyjs > public/app.min.js"
+    "templates": "ng-html2js $(find views -name '*.html') -m notes > scripts/templates.js",
+    "concat": "cat $(find scripts -name '*.js' | sort) | uglifyjs > public/app.min.js"
   }
 }
