@@ -34,8 +34,17 @@ module.exports = {
             if (err) {
               res.status(500);
             }
-            db.close();
-            res.send();
+            db.collection('notes').find({
+              _id: new mongodb.ObjectId(id)
+            }).toArray(function(err, items) {
+              db.close();
+              if (err) {
+                res.status(500);
+                res.send();
+              } else {
+                res.send(items.pop());
+              }
+            });
           });
         }, function(err) {
           res.status(500);

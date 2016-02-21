@@ -28,9 +28,10 @@ angular
     $scope.error = false;
     $scope.saving = true;
     $http.post('/notes/edit', $scope.note)
-    .then(function() {
+    .then(function(response) {
       $scope.saving = false;
       $scope.success = true;
+      $scope.note = response.data;
       $scope.tabs.preview.active = true;
     }, function() {
       $scope.saving = false;
