@@ -1,5 +1,5 @@
 angular
-.module('notes', ['ngSanitize', 'ngRoute', 'ui.bootstrap'])
+.module('notes', ['ngSanitize', 'ngRoute', 'ui.bootstrap', 'angularMoment'])
 .config(function($routeProvider) {
   $routeProvider
   .when('/login', {
@@ -35,4 +35,7 @@ angular
       }
     };
   });
-}]);
+}])
+.run(function(amMoment) {
+  amMoment.changeLocale('en-UK');
+});

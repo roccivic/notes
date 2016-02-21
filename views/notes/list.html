@@ -12,7 +12,7 @@
     <li class="list-group-item pointer" ng-repeat="note in filteredNotes = (notes | filter:keyword | orderBy:'modified':true)" ng-click="edit(note)">
       <h4>
         <span class="pull-right">
-          {{note.modified}}
+          {{note.modified|amCalendar}}
         </span>
         {{note.title}}
       </h4>

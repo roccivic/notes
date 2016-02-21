@@ -14,28 +14,35 @@
   <uib-tabset>
     <uib-tab active="tabs.preview.active">
       <uib-tab-heading>Preview</uib-tab-heading>
-      <h1>
-        {{note.title || 'N/A'}}
-      </h1>
-      <p markdown="note.note || 'N/A'"></p>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <strong>
+              {{note.title||'N/A'}}
+            </strong>
+          </h3>
+        </div>
+        <div class="panel-body" markdown="note.note || 'N/A'">
+        </div>
+      </div>
       <div ng-if="edit">
-        <hr>
         <h4>
           Created
         </h4>
-        {{note.created || 'N/A'}}
+        {{note.created|amCalendar}}
         <h4>
           Created By
         </h4>
-        {{note.createdBy || 'N/A'}}
+        {{note.createdBy}}
         <h4>
           Last Modified
         </h4>
-        {{note.modified || 'N/A'}}
+        {{note.modified|amCalendar}}
         <h4>
           Last Modified By
         </h4>
-        {{note.modifiedBy || 'N/A'}}
+        {{note.modifiedBy}}
       </div>
       <br>
       <br>
