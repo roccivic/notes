@@ -1,6 +1,6 @@
 angular
 .module('notes')
-.controller('AddNoteController', function ($scope, $http) {
+.controller('AddNoteController', function ($scope, $http, $location) {
   $scope.add = true;
   $scope.tabs = {
     preview: {
@@ -10,5 +10,18 @@ angular
       active: true
     }
   };
-  $scope.note = {}
+  $scope.note = {};
+  $scope.submit = function() {
+    $scope.success = false;
+    $scope.error = false;
+    $scope.saving = true;
+    $http.post('/notes/add', $scope.note)
+    .then(function() {
+      $scope.saving = false;
+      $location.path('/notes');
+    }, function() {
+      $scope.saving = false;
+      $scope.error = true
+    });
+  };
 });

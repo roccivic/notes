@@ -1,45 +1,52 @@
-<uib-tabset>
-  <uib-tab active="tabs.preview.active">
-    <uib-tab-heading>Preview</uib-tab-heading>
-    <h1>
-      {{note.title || 'N/A'}}
-    </h1>
-    <p markdown="note.note || 'N/A'"></p>
-    <div ng-if="edit">
-      <hr>
-      <h4>
-        Created
-      </h4>
-      {{note.created || 'N/A'}}
-      <h4>
-        Created By
-      </h4>
-      {{note.createdBy || 'N/A'}}
-      <h4>
-        Last Modified
-      </h4>
-      {{note.modified || 'N/A'}}
-      <h4>
-        Last Modified By
-      </h4>
-      {{note.modifiedBy || 'N/A'}}
-    </div>
-    <br>
-    <br>
-  </uib-tab>
-  <uib-tab active="tabs.edit.active">
-    <uib-tab-heading>Edit</uib-tab-heading>
-    <br>
-    <form>
-      <div class="form-group">
-        <input class="form-control" ng-model="note.title" placeholder="Title">
+<form ng-submit="submit()">
+  <div ng-if="success" class="alert alert-success">
+    Successfully saved note
+  </div>
+  <div ng-if="error" class="alert alert-alert">
+    Failed to save note
+  </div>
+  <uib-tabset>
+    <uib-tab active="tabs.preview.active">
+      <uib-tab-heading>Preview</uib-tab-heading>
+      <h1>
+        {{note.title || 'N/A'}}
+      </h1>
+      <p markdown="note.note || 'N/A'"></p>
+      <div ng-if="edit">
+        <hr>
+        <h4>
+          Created
+        </h4>
+        {{note.created || 'N/A'}}
+        <h4>
+          Created By
+        </h4>
+        {{note.createdBy || 'N/A'}}
+        <h4>
+          Last Modified
+        </h4>
+        {{note.modified || 'N/A'}}
+        <h4>
+          Last Modified By
+        </h4>
+        {{note.modifiedBy || 'N/A'}}
       </div>
-      <div class="form-group">
-        <textarea rows="10" class="form-control" ng-model="note.note" placeholder="Note"></textarea>
-      </div>
-    </form>
-  </uib-tab>
-</uib-tabset>
-<button class="btn btn-primary btn-block">
-  Save
-</button>
+      <br>
+      <br>
+    </uib-tab>
+    <uib-tab active="tabs.edit.active">
+      <uib-tab-heading>Edit</uib-tab-heading>
+      <br>
+        <div class="form-group">
+          <input class="form-control" ng-model="note.title" placeholder="Title" required>
+        </div>
+        <div class="form-group">
+          <textarea rows="10" class="form-control" ng-model="note.note" placeholder="Note" required></textarea>
+        </div>
+    </uib-tab>
+  </uib-tabset>
+  <button class="btn btn-primary btn-block" ng-disabled="saving">
+      <span ng-if="!saving">Save</span>
+      <span ng-if="saving">Loading&hellip;</span>
+  </button>
+</form>
