@@ -4,12 +4,12 @@
 <div ng-if="loading" class="alert alert-info">
   Loading&hellip;
 </div>
-<div ng-if="!loading && !error">
-  <div ng-if="!notes.length" class="alert alert-info">
-    No notes found
+<div ng-show="!loading && !error">
+  <div class="form-group" ng-show="notes.length">
+    <input class="form-control" ng-model="keyword" placeholder="Type to search">
   </div>
   <ul class="list-group">
-    <li class="list-group-item pointer" ng-repeat="note in notes" ng-click="edit(note)">
+    <li class="list-group-item pointer" ng-repeat="note in filteredNotes = (notes | filter:keyword | orderBy:'modified')" ng-click="edit(note)">
       <h4>
         <span class="pull-right">
           {{note.modified}}
@@ -18,4 +18,7 @@
       </h4>
     </li>
   </ul>
+  <div ng-if="!filteredNotes.length" class="alert alert-info">
+    No notes found
+  </div>
 </div>
