@@ -1,7 +1,23 @@
 angular
 .module('notes')
-.controller('LoginController', function ($scope) {
+.controller('LoginController', function ($scope, $http, $location) {
   $scope.submit = function() {
-    alert('FIXME');
+    $scope.error = false;
+    $scope.error500 = false;
+    $scope.loading = true;
+    $http.post('/auth/login', {
+      email: $scope.email,
+      password: $scope.password
+    }).then(function() {
+      $scope.loading = false;
+      $location.path('/notes');
+    }, function(err, status) {
+      $scope.loading = false;
+      if (status === 500) {
+        $scope.error500 = true;
+      } else {
+        $scope.error = true;
+      }
+    });
   };
 });
