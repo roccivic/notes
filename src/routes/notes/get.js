@@ -26,6 +26,9 @@ module.exports = {
             if (err) {
               res.status(500);
               res.send();
+            } else if (!items.length) {
+              res.status(404);
+              res.send();
             } else {
               res.send(items.pop());
             }

@@ -11,9 +11,9 @@ angular
     }).then(function() {
       $scope.loading = false;
       $location.path('/notes');
-    }, function(err, status) {
+    }, function(response) {
       $scope.loading = false;
-      if (status === 500) {
+      if (response.status === 500) {
         $scope.error500 = true;
       } else {
         $scope.error = true;

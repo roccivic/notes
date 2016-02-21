@@ -25,7 +25,7 @@ angular
   }
   $scope.submit = function() {
     $scope.success = false;
-    $scope.error = false;
+    $scope.submitError = false;
     $scope.saving = true;
     $http.post('/notes/edit', $scope.note)
     .then(function(response) {
@@ -33,14 +33,20 @@ angular
       $scope.success = true;
       $scope.note = response.data;
       $scope.tabs.preview.active = true;
-    }, function() {
+    }, function(response) {
       $scope.saving = false;
-      $scope.error = 'Failed to save note';
+      if (response.status === 404) {
+        $scope.submitError = 'It seems that someone deleted this note. Please reload the page and try again.';
+      } else if (response.status === 409) {
+        $scope.submitError = 'It seems that someone edited this note before you. Please reload the page and try again.';
+      } else {
+        $scope.submitError = 'Failed to save note.';
+      }
     });
   };
   $scope.delete = function() {
     if (confirm('You are about to DELETE a note!')) {
-      $scope.error = false;
+      $scope.submitError = false;
       $scope.deleting = true;
       $http.post('/notes/delete', $scope.note)
       .then(function() {
@@ -48,7 +54,7 @@ angular
         $location.path('/notes');
       }, function() {
         $scope.deleting = false;
-        $scope.error = 'Failed to delete note';
+        $scope.submitError = 'Failed to delete note';
       });
     }
   };

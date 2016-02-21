@@ -8,6 +8,9 @@
   <div ng-if="success" class="alert alert-success">
     Successfully saved note
   </div>
+  <div ng-if="submitError" class="alert alert-danger">
+    {{submitError}}
+  </div>
   <button type="button" class="btn btn-danger pull-right" ng-click="delete()" ng-disabled="deleting">
     Delete
   </button>
