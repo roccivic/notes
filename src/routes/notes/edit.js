@@ -28,7 +28,7 @@ module.exports = {
               title: title,
               note: note,
               modified: new Date(),
-              modifiedBy: req.session.email
+              modifiedBy: req.session.name
             }
           }, function(err, result) {
             if (err) {

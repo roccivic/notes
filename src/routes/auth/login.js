@@ -31,6 +31,7 @@ module.exports = {
                 if (dbHash !== userHash) {
                   res.status(401);
                 } else {
+                  req.session.name = user.name;
                   req.session.email = email;
                   res.status(200);
                 }

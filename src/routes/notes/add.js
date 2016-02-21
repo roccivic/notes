@@ -23,9 +23,9 @@ module.exports = {
             title: title,
             note: note,
             created: new Date(),
-            createdBy: req.session.email,
+            createdBy: req.session.name,
             modified: new Date(),
-            modifiedBy: req.session.email
+            modifiedBy: req.session.name
           }, function(err, result) {
             if (err) {
               res.status(500);
