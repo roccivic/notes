@@ -53,15 +53,31 @@
     <uib-tab active="tabs.edit.active">
       <uib-tab-heading>Edit</uib-tab-heading>
       <br>
-        <div class="form-group">
-          <input class="form-control" ng-model="note.title" placeholder="Title" required>
-        </div>
-        <div class="form-group">
-          <textarea rows="10" class="form-control" ng-model="note.note" placeholder="Note" required></textarea>
-        </div>
-        <p>
-          <a target="_blank" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a>
-        </p>
+      <div class="form-group">
+        <input class="form-control" ng-model="note.title" placeholder="Title" required>
+      </div>
+      <div class="form-group">
+        <textarea rows="10" class="form-control" ng-model="note.note" placeholder="Note" required></textarea>
+      </div>
+      <p>
+        <a target="_blank" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a>
+      </p>
+    </uib-tab>
+    <uib-tab active="tabs.history.active" ng-if="edit">
+      <uib-tab-heading>History</uib-tab-heading>
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item pointer" ng-click="showChange(note)">
+          Edited by {{note.modifiedBy}}
+          <br>
+          <small class="text-muted">{{note.modified|amCalendar}}</small>
+        </li>
+        <li class="list-group-item pointer" ng-repeat="change in note.history | orderBy:modified:true" ng-click="showChange(change)">
+          Edited by {{change.modifiedBy}}
+          <br>
+          <small class="text-muted">{{change.modified|amCalendar}}</small>
+        </li>
+      </ul>
     </uib-tab>
   </uib-tabset>
   <button class="btn btn-primary btn-block" ng-disabled="saving">

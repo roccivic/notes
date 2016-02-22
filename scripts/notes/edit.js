@@ -1,12 +1,21 @@
 angular
 .module('notes')
-.controller('EditNoteController', function ($scope, $http, $location, $routeParams) {
+.controller('EditNoteController', function (
+  $scope,
+  $http,
+  $location,
+  $routeParams,
+  $uibModal
+) {
   $scope.edit = true;
   $scope.tabs = {
     preview: {
       active: true
     },
     edit: {
+      active: false
+    },
+    history: {
       active: false
     }
   };
@@ -57,5 +66,18 @@ angular
         $scope.submitError = 'Failed to delete note';
       });
     }
+  };
+  $scope.showChange = function(change) {
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/notes/change.html',
+      controller: 'ChangeController',
+      size: 'lg',
+      resolve: {
+        change: function() {
+          return change;
+        }
+      }
+    });
   };
 });

@@ -35,6 +35,8 @@ module.exports = {
               res.status(409);
               res.send();
             } else {
+              var current = items[0];
+              delete current.history;
               db.collection('notes').updateOne({
                 _id: new mongodb.ObjectId(id)
               }, {
@@ -43,6 +45,9 @@ module.exports = {
                   note: note,
                   modified: new Date(),
                   modifiedBy: req.session.name
+                },
+                '$push': {
+                  history: current
                 }
               }, function(err, result) {
                 if (err) {
