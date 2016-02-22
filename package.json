@@ -44,12 +44,12 @@
   "scripts": {
     "start": "node server",
     "watch": "parallelshell 'npm run watch:src' 'npm run watch:js' 'npm run watch:html'",
-    "watch:html": "watch 'npm run templates && npm run concat' views",
+    "watch:html": "watch 'npm run templates' views",
     "watch:js": "watch 'npm run concat' scripts",
     "watch:src": "nodemon server --watch src",
     "postinstall": "npm run compile",
     "compile": "npm run templates && npm run concat",
-    "templates": "for FILE in $(find views -name '*.html'); do ng-html2js $FILE $(echo $FILE | sed 's/\\.html$/\\.js/') -m notes; done",
-    "concat": "cat $(find scripts -name '*.js' | sort) $(find views -name '*.js' | sort) | uglifyjs > public/app.min.js"
+    "templates": "echo > scripts/templates.js && for FILE in $(find views -name '*.html'); do ng-html2js $FILE -m notes >> scripts/templates.js; done",
+    "concat": "cat $(find scripts -name '*.js' | sort) | uglifyjs > public/app.min.js"
   }
 }
