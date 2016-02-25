@@ -3,8 +3,12 @@ angular
 .config(function($routeProvider) {
   $routeProvider
   .when('/login', {
-    templateUrl: 'views/login.html',
+    templateUrl: 'views/auth/login.html',
     controller: 'LoginController'
+  })
+  .when('/signup', {
+    templateUrl: 'views/auth/signup.html',
+    controller: 'SignupController'
   })
   .when('/notes', {
     templateUrl: 'views/notes/list.html',

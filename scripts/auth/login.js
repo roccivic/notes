@@ -3,7 +3,6 @@ angular
 .controller('LoginController', function ($scope, $http, $location) {
   $scope.submit = function() {
     $scope.error = false;
-    $scope.error500 = false;
     $scope.loading = true;
     $http.post('/auth/login', {
       email: $scope.email,
@@ -14,9 +13,9 @@ angular
     }, function(response) {
       $scope.loading = false;
       if (response.status === 500) {
-        $scope.error500 = true;
+        $scope.error = 'A server error occurred while processing your request. Please try again later.';
       } else {
-        $scope.error = true;
+        $scope.error = 'Username or password are invalid.'
       }
     });
   };
