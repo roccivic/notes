@@ -17,7 +17,11 @@ module.exports = {
       var name = req.body.name;
       var email = req.body.email;
       var password = req.body.password;
-      if (!name || !email || !password) {
+      if (typeof name !== 'string'
+        || typeof email !== 'string'
+        || typeof password !== 'string'
+        || password.length < 12
+      ) {
         res.status(400);
         res.send();
       } else {
