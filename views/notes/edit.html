@@ -11,7 +11,7 @@
   <div ng-if="submitError" class="alert alert-danger">
     {{submitError}}
   </div>
-  <button type="button" class="btn btn-danger pull-right" ng-click="delete()" ng-disabled="deleting">
+  <button type="button" class="btn btn-danger pull-right" ng-click="delete()" ng-disabled="deleting" ng-if="edit">
     Delete
   </button>
   <uib-tabset>
