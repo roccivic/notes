@@ -1,9 +1,13 @@
 'use strict'
 
+var q = require('q');
+
 module.exports = {
   method: 'post',
   action: function(req, res) {
+    var deferred = q.defer();
     req.session.email = undefined;
-    res.send();
+    deferred.resolve();
+    return deferred.promise;
   }
 };

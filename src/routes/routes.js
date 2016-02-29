@@ -23,6 +23,18 @@ function getRoutes() {
   return deferred.promise;
 }
 
+function getAction(route) {
+  return function(req, res) {
+    route.action(req, res)
+    .then(function(response) {
+      res.send(response);
+    }, function(code) {
+      res.status(code);
+      res.send();
+    });
+  };
+}
+
 module.exports = {
   init: function(app) {
     var deferred = q.defer();
@@ -30,7 +42,7 @@ module.exports = {
       routes.forEach(function (route) {
         app[route.method](
           route.url,
-          route.action
+          getAction(route)
         );
       });
       deferred.resolve();

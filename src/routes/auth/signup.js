@@ -1,18 +1,18 @@
 'use strict'
 
 var createHash = require('sha.js');
+var q = require('q');
 var srs = require('secure-random-string');
 var connect = require('../../db');
 
 module.exports = {
   method: 'post',
   action: function(req, res) {
+    var deferred = q.defer();
     if (!req.session.email) {
-      res.status(401);
-      res.send();
+      deferred.reject(401);
     } else if (!req.body) {
-      res.status(400);
-      res.send();
+      deferred.reject(400);
     } else {
       var name = req.body.name;
       var email = req.body.email;
@@ -22,8 +22,7 @@ module.exports = {
         || typeof password !== 'string'
         || password.length < 12
       ) {
-        res.status(400);
-        res.send();
+        deferred.reject(400);
       } else {
         connect().then(function (db) {
           var sha256 = createHash('sha256');
@@ -38,18 +37,21 @@ module.exports = {
             hash: hash,
             created: new Date(),
             createdBy: req.session.name
-          }, function(err, result) {
+          }, function(err) {
             if (err) {
-              res.status(500);
+              console.log(err);
+              deferred.reject(500);
+            } else {
+              deferred.resolve();
             }
             db.close();
-            res.send();
           });
         }, function (err) {
-          res.status(500);
-          res.send();
+          console.log(err);
+          deferred.reject(500);
         });
       }
     }
+    return deferred.promise;
   }
 };

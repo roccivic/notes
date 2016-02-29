@@ -1,22 +1,21 @@
 'use strict'
 
+var q = require('q');
 var connect = require('../../db');
 
 module.exports = {
   method: 'post',
   action: function(req, res) {
+    var deferred = q.defer();
     if (!req.session.email) {
-      res.status(401);
-      res.send();
+      deferred.reject(401);
     } else if (!req.body) {
-      res.status(400);
-      res.send();
+      deferred.reject(400);
     } else {
       var title = req.body.title;
       var note = req.body.note;
       if (!title || !note) {
-        res.status(400);
-        res.send();
+        deferred.reject(400);
       } else {
         connect().then(function(db) {
           db.collection('notes').insert({
@@ -26,18 +25,21 @@ module.exports = {
             createdBy: req.session.name,
             modified: new Date(),
             modifiedBy: req.session.name
-          }, function(err, result) {
+          }, function(err) {
             if (err) {
-              res.status(500);
+              console.log(err);
+              deferred.reject(500);
+            } else {
+              deferred.resolve();
             }
             db.close();
-            res.send();
           });
         }, function(err) {
-          res.status(500);
-          res.send();
+          console.log(err);
+          deferred.reject(500);
         });
       }
     }
+    return deferred.promise;
   }
 };

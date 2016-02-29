@@ -1,39 +1,36 @@
 'use strict'
 
-var connect = require('../../db');
 var mongodb = require('mongodb');
+var q = require('q');
+var connect = require('../../db');
 
 module.exports = {
   method: 'post',
   action: function(req, res) {
+    var deferred = q.defer();
     if (!req.session.email) {
-      res.status(401);
-      res.send();
+      deferred.reject(401);
     } else if (!req.body) {
-      res.status(400);
-      res.send();
+      deferred.reject(400);
     } else {
       var id = req.body._id;
       var title = req.body.title;
       var note = req.body.note;
       var modified = req.body.modified;
       if (!id || !title || !note) {
-        res.status(400);
-        res.send();
+        deferred.reject(400);
       } else {
         connect().then(function(db) {
           db.collection('notes').find({
             _id: new mongodb.ObjectId(id)
           }).toArray(function(err, items) {
             if (err) {
-              res.status(500);
-              res.send();
+              console.log(err);
+              deferred.reject(500);
             } else if (!items.length) {
-              res.status(404);
-              res.send();
+              deferred.reject(404);
             } else if (items[0].modified > new Date(modified)) {
-              res.status(409);
-              res.send();
+              deferred.reject(409);
             } else {
               var current = items[0];
               delete current.history;
@@ -51,32 +48,32 @@ module.exports = {
                 }
               }, function(err, result) {
                 if (err) {
-                  res.status(500);
-                  res.send();
+                  console.log(err);
+                  deferred.reject(500);
                 } else {
                   db.collection('notes').find({
                     _id: new mongodb.ObjectId(id)
                   }).toArray(function(err, items) {
-                    db.close();
                     if (err) {
-                      res.status(500);
-                      res.send();
+                      console.log(err);
+                      deferred.reject(500);
                     } else if (!items.length) {
-                      res.status(404);
-                      res.send();
+                      deferred.reject(404);
                     } else {
-                      res.send(items.pop());
+                      deferred.resolve(items.pop());
                     }
+                    db.close();
                   });
                 }
               });
             }
           });
         }, function(err) {
-          res.status(500);
-          res.send();
+          console.log(err);
+          deferred.reject(500);
         });
       }
     }
+    return deferred.promise;
   }
 };
