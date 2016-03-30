@@ -42,6 +42,7 @@ angular
 })
 .config(function($showdownProvider) {
   $showdownProvider.setOption('tables', true);
+  $showdownProvider.setOption('strikethrough', true);
 })
 .run(function(amMoment) {
   amMoment.changeLocale('en-UK');
