@@ -1,11 +1,10 @@
-<div class="modal-content">
+<div class="modal-content" ng-init="init()">
   <div class="modal-header bg-primary">
     <h4 class="modal-title">
       {{change.title}}
     </h4>
   </div>
-  <div class="modal-body">
-    <pre>{{change.note}}</pre>
+  <div class="modal-body" ng-bind-html="diff">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="close()">

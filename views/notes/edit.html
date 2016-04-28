@@ -67,12 +67,12 @@
       <uib-tab-heading>History</uib-tab-heading>
       <br>
       <ul class="list-group">
-        <li class="list-group-item pointer" ng-click="showChange(note)">
+        <li class="list-group-item pointer" ng-click="showChange(note, 0)">
           Edited by {{note.modifiedBy}}
           <br>
           <small class="text-muted">{{note.modified|amCalendar}}</small>
         </li>
-        <li class="list-group-item pointer" ng-repeat="change in note.history | orderBy:modified:true" ng-click="showChange(change)">
+        <li class="list-group-item pointer" ng-repeat="change in note.history" ng-click="showChange(change, $index+1)">
           Edited by {{change.modifiedBy}}
           <br>
           <small class="text-muted">{{change.modified|amCalendar}}</small>

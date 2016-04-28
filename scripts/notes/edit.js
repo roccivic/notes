@@ -5,7 +5,8 @@ angular
   $http,
   $location,
   $routeParams,
-  $uibModal
+  $uibModal,
+  $filter
 ) {
   $scope.edit = true;
   $scope.tabs = {
@@ -27,6 +28,7 @@ angular
     .then(function(response) {
       $scope.loading  = false;
       $scope.note = response.data;
+      $scope.note.history = $filter('orderBy')($scope.note.history, 'modified', true);
     }, function() {
       $scope.loading = false;
       $scope.error = 'An error has occurred while retrieving the note.';
@@ -67,15 +69,21 @@ angular
       });
     }
   };
-  $scope.showChange = function(change) {
+  $scope.showChange = function(change, index) {
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/notes/change.html',
       controller: 'ChangeController',
       size: 'lg',
       resolve: {
-        change: function() {
+        curr: function() {
           return change;
+        },
+        prev: function() {
+          if (!$scope.note.history || !$scope.note.history[index]) {
+            return { note:'' };
+          }
+          return $scope.note.history[index];
         }
       }
     });
