@@ -1,6 +1,7 @@
 angular
 .module('notes')
 .controller('ChangeController', function ($scope, $sce, $uibModalInstance, curr, prev) {
+  $scope.title = curr.title;
   $scope.close = function() {
     $uibModalInstance.dismiss('cancel');
   };
